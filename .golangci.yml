@@ -41,7 +41,6 @@ linters:
     - gofumpt
     - goheader
     - goimports
-    - golint
     - gomodguard
     - goprintffuncname
     - gosec
@@ -51,6 +50,7 @@ linters:
     - ineffassign
     - misspell
     - nestif
+    - revive
     - noctx
     - nolintlint
     - prealloc
