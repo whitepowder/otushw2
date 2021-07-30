@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	// ErrInvalidString is ..
+	// ErrInvalidString is ...
 	ErrInvalidString = errors.New("invalid string")
 	ErrNo            = errors.New("")
 	strBuilder       strings.Builder
