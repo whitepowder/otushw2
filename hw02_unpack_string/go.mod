@@ -1,5 +1,6 @@
 module github.com/whitepowder/hw02_unpack_string
 
+
 go 1.16
 
 require (
