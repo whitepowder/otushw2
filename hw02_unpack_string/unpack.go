@@ -2,22 +2,20 @@ package hw02unpackstring
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 	"unicode"
 )
 
 var (
-	// ErrInvalidString is ...
 	ErrInvalidString = errors.New("invalid string")
-	ErrNo            = errors.New("")
 	strBuilder       strings.Builder
 	runeArray        []rune
 	splitedStr       []string
 )
 
 func Unpack(inputStr string) (string, error) {
+	strBuilder.Reset()
 	runeArray = []rune(inputStr)
 	for i := 0; i < len(runeArray); i++ {
 		switch {
@@ -29,7 +27,7 @@ func Unpack(inputStr string) (string, error) {
 			BuiltString(inputStr, i)
 		}
 	}
-	return strBuilder.String(), ErrNo
+	return strBuilder.String(), nil
 }
 
 func getRepeatValue(str string, position int) (int, error) {
@@ -38,20 +36,19 @@ func getRepeatValue(str string, position int) (int, error) {
 	case unicode.IsDigit(runeArray[position]):
 		return strconv.Atoi(splitedStr[position])
 	default:
-		return 1, ErrNo
+		return 1, nil
 	}
 }
 
 func BuiltString(str string, position int) {
-	repeatValue, ErrNo := getRepeatValue(str, position)
+	repeatValue, _ := getRepeatValue(str, position)
 	switch {
-	case position != 0:
-		if !unicode.IsDigit(runeArray[position-1]) {
-			strBuilder.WriteString(strings.Repeat(splitedStr[position-1], repeatValue))
+	case position != 0 && !unicode.IsDigit(runeArray[position-1]):
+		strBuilder.WriteString(strings.Repeat(splitedStr[position-1], repeatValue))
+		if (position+1 == len(runeArray)) && !unicode.IsDigit(runeArray[position]) {
+			strBuilder.WriteString(strings.Repeat(splitedStr[position], repeatValue))
 		}
 	case (position+1 == len(runeArray)) && !unicode.IsDigit(runeArray[position]):
 		strBuilder.WriteString(strings.Repeat(splitedStr[position], repeatValue))
-	default:
-		fmt.Print(ErrNo)
 	}
 }
