@@ -8,6 +8,7 @@ import (
 )
 
 var (
+	// ErrInvalidString ...
 	ErrInvalidString = errors.New("invalid string")
 	strBuilder       strings.Builder
 	runeArray        []rune
