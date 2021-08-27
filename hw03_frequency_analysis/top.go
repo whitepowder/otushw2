@@ -5,13 +5,17 @@ import (
 	"strings"
 )
 
+type Pair struct {
+	Word  string
+	Value int
+}
+
+var (
+	pair []Pair
+	str  []string
+)
+
 func Top10(text1 string) []string {
-	type Pair struct {
-		Word  string
-		Value int
-	}
-	var pair []Pair
-	var str []string
 	spltdText := strings.Fields(text1)
 	sort.Strings(spltdText)
 	elements := make(map[string]int)
@@ -32,8 +36,7 @@ func Top10(text1 string) []string {
 
 	for i, pair := range pair {
 		if i < 10 {
-			a := string(pair.Word)
-			str = append(str, a)
+			str = append(str, pair.Word)
 		}
 	}
 	return str
