@@ -1,6 +1,7 @@
 package hw03frequencyanalysis
 
 import (
+	"regexp"
 	"sort"
 	"strings"
 )
@@ -11,20 +12,24 @@ type Pair struct {
 }
 
 var (
-	pair []Pair
-	str  []string
+	pair         []Pair
+	result       []string
+	clearSymbols = regexp.MustCompile(`[,.!?-]`)
 )
 
 func Top10(text1 string) []string {
-	spltdText := strings.Fields(text1)
+	spltdText := strings.Fields(strings.ToLower(text1))
 	sort.Strings(spltdText)
 	elements := make(map[string]int)
 	for _, value := range spltdText {
+		value = clearSymbols.ReplaceAllString(value, "")
 		elements[value]++
 	}
 
 	for w, v := range elements {
-		pair = append(pair, Pair{w, v})
+		if w != "" {
+			pair = append(pair, Pair{w, v})
+		}
 	}
 
 	sort.Slice(pair, func(i, j int) bool {
@@ -36,8 +41,8 @@ func Top10(text1 string) []string {
 
 	for i, pair := range pair {
 		if i < 10 {
-			str = append(str, pair.Word)
+			result = append(result, pair.Word)
 		}
 	}
-	return str
+	return result
 }
