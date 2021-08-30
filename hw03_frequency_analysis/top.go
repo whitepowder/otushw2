@@ -19,7 +19,6 @@ var (
 
 func Top10(text1 string) []string {
 	spltdText := strings.Fields(strings.ToLower(text1))
-	sort.Strings(spltdText)
 	elements := make(map[string]int)
 	for _, value := range spltdText {
 		value = clearSymbols.ReplaceAllString(value, "")
