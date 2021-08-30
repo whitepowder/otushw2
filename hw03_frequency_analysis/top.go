@@ -19,7 +19,10 @@ var (
 
 func Top10(text1 string) []string {
 	spltdText := strings.Fields(strings.ToLower(text1))
+<<<<<<< HEAD
 	sort.Strings(spltdText)
+=======
+>>>>>>> hw03_frequency_analysis
 	elements := make(map[string]int)
 	for _, value := range spltdText {
 		value = clearSymbols.ReplaceAllString(value, "")
