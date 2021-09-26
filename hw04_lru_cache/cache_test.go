@@ -51,6 +51,7 @@ func TestCache(t *testing.T) {
 
 	t.Run("purge logic", func(t *testing.T) {
 		c := NewCache(10)
+
 		wasInCache := c.Set("aaa", 100)
 		require.False(t, wasInCache)
 
@@ -66,7 +67,6 @@ func TestCache(t *testing.T) {
 		val, ok = c.Get("bbb")
 		require.False(t, ok)
 		require.Nil(t, val)
-
 	})
 }
 
