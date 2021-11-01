@@ -6,13 +6,7 @@ import (
 	"strings"
 )
 
-type Pair struct {
-	Word  string
-	Value int
-}
-
 var (
-	pair         []Pair
 	result       []string
 	clearSymbols = regexp.MustCompile(`[,.!?-]`)
 )
@@ -24,6 +18,13 @@ func Top10(text1 string) []string {
 		value = clearSymbols.ReplaceAllString(value, "")
 		elements[value]++
 	}
+
+	type Pair struct {
+		Word  string
+		Value int
+	}
+
+	var pair []Pair
 
 	for w, v := range elements {
 		if w != "" {
