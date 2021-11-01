@@ -5,7 +5,7 @@ import (
 	"sync"
 )
 
-// ErrErrorsLimitExceeded is the best.
+// ErrErrorsLimitExceeded is the best is the best.
 var ErrErrorsLimitExceeded = errors.New("errors limit exceeded")
 
 type Task func() error
