@@ -22,11 +22,11 @@ type Param struct {
 
 func TestCopy(t *testing.T) {
 	t.Run("Triggering Errors", func(t *testing.T) {
-		defer os.Remove("test.txt")
+		defer os.Remove("out.txt")
 		tests := []testCase{
-			{name: "No source file", param: Param{"", "test.txt", 0, 0, Err404}},
-			{name: "Unsupported file", param: Param{"testdata", "test.txt", 0, 0, ErrUnsupportedFile}},
-			{name: "ExceedsFileSize", param: Param{"testdata/input.txt", "test.txt", 10000000, 0, ErrUnsupportedFile}},
+			{name: "No source file", param: Param{"", "out.txt", 0, 0, Err404}},
+			{name: "Unsupported file", param: Param{"testdata", "out.txt", 0, 0, ErrUnsupportedFile}},
+			{name: "ExceedsFileSize", param: Param{"testdata/input.txt", "out.txt", 10000000, 0, ErrUnsupportedFile}},
 			{name: "Can't create file", param: Param{"testdata/input.txt", "", 0, 0, ErrCantCreate}},
 		}
 		for _, tc := range tests {
