@@ -2,14 +2,66 @@ package main
 
 import (
 	"errors"
+	"fmt"
+	"io"
+	"os"
+	"time"
+
+	"github.com/cheggaaa/pb/v3"
 )
 
 var (
 	ErrUnsupportedFile       = errors.New("unsupported file")
 	ErrOffsetExceedsFileSize = errors.New("offset exceeds file size")
+	Err404                   = errors.New("404 Not found")
+	ErrCantCreate            = errors.New("can't create file")
 )
 
 func Copy(fromPath, toPath string, offset, limit int64) error {
-	// Place your code here.
+	srcFile, err := os.Open(fromPath)
+	if err != nil {
+		return Err404
+	}
+
+	fileInfo, err := os.Stat(fromPath)
+	if err != nil {
+		return ErrUnsupportedFile
+	}
+
+	fileSize := fileInfo.Size()
+	if offset > fileSize {
+		return ErrOffsetExceedsFileSize
+	}
+
+	if limit == 0 || limit > fileSize {
+		limit = fileSize - offset
+	}
+
+	defer srcFile.Close()
+
+	fileTransaction := io.LimitReader(srcFile, limit)
+
+	count := 100
+	bar := pb.StartNew(count)
+
+	for i := 0; i < count; i++ {
+		bar.Increment()
+		time.Sleep(time.Millisecond)
+	}
+
+	destFile, err := os.Create(toPath)
+	if err != nil {
+		return ErrCantCreate
+	}
+	defer destFile.Close()
+
+	_, err = io.CopyN(destFile, fileTransaction, limit)
+	if err != nil {
+		return err
+	}
+
+	bar.Finish()
+	fmt.Printf("File copied successfully. Initial size - %v, copied - %v. From %v - to %v", fileSize, limit, srcFile, destFile)
+
 	return nil
 }
