@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 )
 
 var (
@@ -23,4 +24,5 @@ func main() {
 	if err != nil {
 		fmt.Println("err")
 	}
+	os.Exit(0)
 }
