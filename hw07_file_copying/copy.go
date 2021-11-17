@@ -12,10 +12,13 @@ import (
 
 var (
 	// ErrUnsupportedFile is perfect.
-	ErrUnsupportedFile       = errors.New("unsupported file")
+	ErrUnsupportedFile = errors.New("unsupported file")
+	// ErrOffsetExceedsFileSize is also perfect.
 	ErrOffsetExceedsFileSize = errors.New("offset exceeds file size")
-	Err404                   = errors.New("404 Not found")
-	ErrCantCreate            = errors.New("can't create file")
+	// Err404 is fine.
+	Err404 = errors.New("404 Not found")
+	// ErrCantCreate kinda meh.
+	ErrCantCreate = errors.New("can't create file")
 )
 
 func Copy(fromPath, toPath string, offset, limit int64) error {
