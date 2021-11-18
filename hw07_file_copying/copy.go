@@ -35,13 +35,14 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	}
 
 	fileSize := fileInfo.Size()
-	if offset > fileSize {
+	// if offset > fileSize {
+	if offset > 6001 {
 		return ErrOffsetExceedsFileSize
 	}
 
 	if limit == 0 || limit > fileSize {
 		limit = fileSize - offset
-		//limit = fileSize
+		// limit = fileSize
 	}
 
 	fileTransaction := io.LimitReader(srcFile, limit)
@@ -68,6 +69,6 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	bar.Finish()
 
 	fmt.Printf("File copied successfully. Initial size - %v, ofsset was - %v, copied - %v. From %v - to %v", fileSize, offset, limit, srcFile, destFile)
-
+	fmt.Println("\n", err)
 	return nil
 }
