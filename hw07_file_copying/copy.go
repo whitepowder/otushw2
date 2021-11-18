@@ -26,6 +26,8 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 		return Err404
 	}
 
+	defer srcFile.Close()
+
 	fileInfo, err := os.Stat(fromPath)
 	if err != nil {
 		return ErrUnsupportedFile
@@ -39,8 +41,6 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	if limit == 0 || limit > fileSize {
 		limit = fileSize - offset
 	}
-
-	defer srcFile.Close()
 
 	fileTransaction := io.LimitReader(srcFile, limit)
 
@@ -60,7 +60,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 
 	_, err = io.CopyN(destFile, fileTransaction, limit)
 	if err != nil {
-		return err
+		return io.EOF
 	}
 
 	bar.Finish()
