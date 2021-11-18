@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"time"
@@ -40,6 +41,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 
 	if limit == 0 || limit > fileSize {
 		limit = fileSize - offset
+		//limit = fileSize
 	}
 
 	fileTransaction := io.LimitReader(srcFile, limit)
@@ -65,6 +67,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 
 	bar.Finish()
 
-	// fmt.Printf("File copied successfully. Initial size - %v, copied - %v. From %v - to %v", fileSize, limit, srcFile, destFile)
+	fmt.Printf("File copied successfully. Initial size - %v, ofsset was - %v, copied - %v. From %v - to %v", fileSize, offset, limit, srcFile, destFile)
+
 	return nil
 }
