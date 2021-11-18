@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"io"
 	"os"
 	"time"
@@ -66,6 +65,6 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 
 	bar.Finish()
 
-	fmt.Printf("File copied successfully. Initial size - %v, copied - %v. From %v - to %v", fileSize, limit, srcFile, destFile)
+	// fmt.Printf("File copied successfully. Initial size - %v, copied - %v. From %v - to %v", fileSize, limit, srcFile, destFile)
 	return nil
 }
