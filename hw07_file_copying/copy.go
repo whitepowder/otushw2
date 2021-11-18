@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"time"
 
@@ -62,7 +61,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 
 	_, err = io.CopyN(destFile, fileTransaction, limit)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	bar.Finish()
