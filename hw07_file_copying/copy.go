@@ -35,17 +35,15 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	}
 
 	fileSize := fileInfo.Size()
-	// if offset > fileSize {
-	if offset > 6001 {
+	if offset > fileSize {
 		return ErrOffsetExceedsFileSize
 	}
 
 	if limit == 0 || limit > fileSize {
 		limit = fileSize - offset
-		// limit = fileSize
 	}
 
-	fileTransaction := io.LimitReader(srcFile, limit)
+	fileTransaction := io.NewSectionReader(srcFile, offset, limit)
 
 	count := 100
 	bar := pb.StartNew(count)
@@ -61,7 +59,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	}
 	defer destFile.Close()
 
-	_, err = io.CopyN(destFile, fileTransaction, limit)
+	_, err = io.Copy(destFile, fileTransaction)
 	if err != nil {
 		return io.EOF
 	}
@@ -70,5 +68,6 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 
 	fmt.Printf("File copied successfully. Initial size - %v, ofsset was - %v, copied - %v. From %v - to %v", fileSize, offset, limit, srcFile, destFile)
 	fmt.Println("\n", err)
+
 	return nil
 }
