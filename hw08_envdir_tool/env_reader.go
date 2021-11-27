@@ -18,11 +18,11 @@ type EnvValue struct {
 }
 
 var (
-	// ErrDirPathEmty is an error
+	// ErrDirPathEmty is an error.
 	ErrDirPathEmty = errors.New("dir path is empty")
-	// ErrWrongPath is also an error
+	// ErrWrongPath is also an error.
 	ErrWrongPath = errors.New("wrong dir path")
-	// ErrPath guess what? Error
+	// ErrPath guess what? Error.
 	ErrPath = errors.New("bad file path")
 )
 
