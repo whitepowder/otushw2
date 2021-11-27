@@ -18,10 +18,12 @@ type EnvValue struct {
 }
 
 var (
-	Err404         = errors.New("error 404")
+	// ErrDirPathEmty is an error
 	ErrDirPathEmty = errors.New("dir path is empty")
-	ErrWrongPath   = errors.New("wrong dir path")
-	ErrPath        = errors.New("bad file path")
+	// ErrWrongPath is also an error
+	ErrWrongPath = errors.New("wrong dir path")
+	// ErrPath guess what? Error
+	ErrPath = errors.New("bad file path")
 )
 
 // ReadDir reads a specified directory and returns map of env variables.
@@ -59,7 +61,7 @@ func ReadDir(dir string) (Environment, error) {
 
 		f, err := os.Open(fPath)
 		if err != nil {
-			return nil, Err404
+			return nil, err
 		}
 
 		scanner := bufio.NewScanner(f)
