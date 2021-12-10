@@ -23,7 +23,7 @@ var (
 	ErrMin = errors.New("less than min")
 	// ErrMax is related to the max value error.
 	ErrMax = errors.New("larger than max")
-	// ErrIn is related to the values comparasion error.
+	// ErrIn is related to the values comparison error.
 	ErrIn = errors.New("should be specific")
 )
 
