@@ -34,7 +34,7 @@ linters:
     - gci
     - gocognit
     - goconst
-    - gocritic
+  # - gocritic - constantly asking to change switch to if or vise-versa
     - gocyclo
     - godot
     - gofmt
