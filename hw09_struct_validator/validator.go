@@ -15,11 +15,16 @@ type ValidationError struct {
 }
 
 var (
-	ErrLen    = errors.New("lenth is not correct")
+	// ErrLen is related to the value length error
+	ErrLen = errors.New("lenth is not correct")
+	// ErrRegExp is related to the symbol matching error
 	ErrRegExp = errors.New("does not contain required symbols")
-	ErrMin    = errors.New("less than min")
-	ErrMax    = errors.New("larger than max")
-	ErrIn     = errors.New("should be specific")
+	// ErrMin is related to the min value error
+	ErrMin = errors.New("less than min")
+	// ErrMax is related to the max value error
+	ErrMax = errors.New("larger than max")
+	// ErrIn is related to the values comparasion error
+	ErrIn = errors.New("should be specific")
 )
 
 type ValidationErrors []ValidationError
