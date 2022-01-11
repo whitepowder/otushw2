@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type UserRole string
@@ -39,13 +41,72 @@ type (
 func TestValidate(t *testing.T) {
 	tests := []struct {
 		in          interface{}
-		expectedErr error
+		expectedErr ValidationErrors
 	}{
 		{
-			// Place your code here.
+			in: User{
+				ID:    "33",
+				Name:  "Pupa",
+				Age:   10,
+				Email: "dfsf",
+				Role:  "guest",
+				Phones: []string{
+					"8800353535",
+					"911",
+				},
+				meta: json.RawMessage{},
+			},
+			expectedErr: ValidationErrors{
+				ValidationError{
+					Field: "ID",
+					Err:   ErrLen,
+				},
+				ValidationError{
+					Field: "Age",
+					Err:   ErrMin,
+				},
+				ValidationError{
+					Field: "Email",
+					Err:   ErrRegExp,
+				},
+				ValidationError{
+					Field: "Role",
+					Err:   ErrIn,
+				},
+				ValidationError{
+					Field: "Phones",
+					Err:   ErrLen,
+				},
+				ValidationError{
+					Field: "Phones",
+					Err:   ErrLen,
+				},
+			},
 		},
-		// ...
-		// Place your code here.
+
+		{
+			in: App{
+				Version: "ver",
+			},
+			expectedErr: ValidationErrors{
+				ValidationError{
+					Field: "Version",
+					Err:   ErrLen,
+				},
+			},
+		},
+		{
+			in: Response{
+				Code: 606,
+				Body: "",
+			},
+			expectedErr: ValidationErrors{
+				ValidationError{
+					Field: "Code",
+					Err:   ErrIn,
+				},
+			},
+		},
 	}
 
 	for i, tt := range tests {
@@ -53,7 +114,9 @@ func TestValidate(t *testing.T) {
 			tt := tt
 			t.Parallel()
 
-			// Place your code here.
+			err := Validate(tt.in)
+			assert.Equal(t, &tt.expectedErr, err)
+
 			_ = tt
 		})
 	}
